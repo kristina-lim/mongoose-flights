@@ -20,11 +20,7 @@
         <td><%= f.flightNo %></td>
         <td><%= f.departs %></td>
         <td><button><a href="/flights/<%= f._id %>">Detail</a></button></td>
-        <!-- finish the ternary expression to display
-                      'Yes' or 'Nope' --> 
-        <!-- <td><%= f.flightsNow ? 'Yes' : 'Nope' %></td> -->
       </tr>
-    <!-- Close the forEach using EJS here -->
     <% }); %>
   </tbody>
 </table>

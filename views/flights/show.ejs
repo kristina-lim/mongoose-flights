@@ -9,22 +9,20 @@
   <div><%= flight.flightNo %></div>
   <div>Departure: </div>
   <div><%= flight.departs %></div>
-  <div>Ticket:</div>
-  <ul>
-      <%- flight.ticket.map (t =>
-          `<li>${t.seat} <small>${t.price}</small> <small>${t.flight}</small></li>`
-      ).join('') %>
-  </ul>
-</section>
-
-<form id="add-ticket" action="/flights/<%= flight._id %>/tickets" method="POST">
-    <select name="ticketId">
-        <%- tickets.map (p =>
-            `<option value="${t._id}">${t.seat} <small>${t.price}</small> <small>${t.flight}</small></option>
-        ).join('') %>
-    </select>
-    <button><a href="/tickets<%= t._id %>">New Ticket</a></button>
-</form>
+  <div>Before adding, please ensure that the Ticket is not in the following list:</div>
+  <section id="badge-container">
+      <% tickets.forEach(function(t) { %>
+          <article class="badge"><%= t.seat %></article>
+      <% }) %>
+  </section>
+  
+  <form id="add-ticket" action="/flights/<%= flight._id %>/tickets" method="POST">
+      <label>Seat:</label>
+      <input type="string" name="seat" required pattern="[A-F][1-9]\d?">
+      <label>Price:</label>
+      <input type="number" name="price">
+      <input type="submit" value="Add Ticket">
+  </form>
 
 <br><br><h2>Destinations</h2>
 <form id="add-destination-form" method="POST" action="/flights/<%= flight._id %>/destinations">
@@ -54,6 +52,20 @@
   </table>
 <% } else { %>
   <h5>No Current Destination</h5>
+<% } %>
+
+<% if (tickets.length) { %>
+    <% tickets.forEach(function(t) { %>
+        <tr>
+            <td><%= t.seat %></td>
+            <td><%= t.price %></td>
+        </tr>
+        <% }); %>
+    <tbody>
+    </tbody>
+  </table>
+<% } else { %>
+  <h5>No Current Ticket</h5>
 <% } %>
 
 <%- include('../partials/footer') %>

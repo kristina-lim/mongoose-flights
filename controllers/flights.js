@@ -15,8 +15,8 @@ function show(req, res) {
                 title: 'Flight Details',
                 flight,
                 tickets
-                });
             });
+        });
     });
 }
 

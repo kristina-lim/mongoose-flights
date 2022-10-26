@@ -3,8 +3,7 @@ const Flight = require('../models/flight');
 
 module.exports = {
     new: newTicket,
-    create,
-    addToTicket
+    create
 };
 
 // function addToTicket(req, res) {
