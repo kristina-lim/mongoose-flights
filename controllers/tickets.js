@@ -6,28 +6,19 @@ module.exports = {
     create
 };
 
-// function addToTicket(req, res) {
-//     Flight.findById(req.params.id, function(err, flight) {
-//         flight.ticket.push(req.body.ticketId);
-//         flight.save(function(err) {
-//             res.redirect(`/flights/${flight._id}`);
-//         });
-//     });
-// }
-
 function create(req, res) {
-    req.body.flight = req.params.id;
-    Ticket.create(req.body, function(err, ticket) {
-        res.redirect(`/flights/${req.params.id}`);
+    const flightId = req.params.id;
+    const ticket = req.body;
+    ticket.flight = flightId;
+    Ticket.create(ticket, function(err, ticket) {
+        if (err) return res.redirect(`/flights/${flightId}/tickets/new`);
+        res.redirect(`/flights/${flightId}`);
     });
 }
 
 function newTicket(req, res) {
-    Ticket.find({})
-    .exec(function(err, tickets) {
-        res.render('tickets/new', {
+    res.render('tickets/new', {
             title: 'Add Ticket',
-            tickets
-        });
+            flightId: req.params.id
     });
 }
